@@ -3,8 +3,8 @@ var HtmlScreenshotReporter = require('protractor-jasmine2-screenshot-reporter');
 
 var reporter = new HtmlScreenshotReporter({
 
-  dest: 'target/screenshots',
-  filename: 'my-report.html'
+  dest: 'target/HtmlRepotrScreenshots',
+  filename: 'HTMLScreenShotReport.html'
 });
 
 exports.config = {
@@ -20,7 +20,7 @@ exports.config = {
 
   // Spec patterns are relative to the current working directory when
   // protractor is called.
-  specs: ['../tests/calculator.js'],
+  specs: ['../tests/dummyControls.js'],
 
   // Options to be passed to Jasmine.
   jasmineNodeOpts: {
@@ -46,7 +46,7 @@ exports.config = {
     jasmine.getEnv().addReporter(new jasmineReporters.JUnitXmlReporter({
       consolidateAll: true,
       savePath: './',
-      filePrefix: 'xmlresults'
+      filePrefix: 'jasminexmlresults'
     }));
 
     var fs = require('fs-extra');
@@ -100,7 +100,7 @@ fs.emptyDir('screenshots/', function (err) {
         screenshotsOnlyOnFailure: true,
         testPlatform: platform
       };
-      new HTMLReport().from('xmlresults.xml', testConfig);
+      new HTMLReport().from('jasminexmlresults.xml', testConfig);
     });
   }
 };
