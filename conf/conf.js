@@ -10,6 +10,9 @@ var reporter = new HtmlScreenshotReporter({
 exports.config = {
   directConnect: true,
 
+  //Calculator URL
+  calculator_URL:'https://juliemr.github.io/protractor-demo/',
+
   // Capabilities to be passed to the webdriver instance.
   capabilities: {
     'browserName': 'chrome'
@@ -20,7 +23,8 @@ exports.config = {
 
   // Spec patterns are relative to the current working directory when
   // protractor is called.
-  specs: ['../tests/dummyControls.js'],
+  specs: ['../tests/dummyControls.js',
+    '../tests/calculator.js'],
 
   // Options to be passed to Jasmine.
   jasmineNodeOpts: {
@@ -50,25 +54,25 @@ exports.config = {
     }));
 
     var fs = require('fs-extra');
- 
-fs.emptyDir('screenshots/', function (err) {
-        console.log(err);
+
+    fs.emptyDir('screenshots/', function (err) {
+      console.log(err);
     });
- 
+
     jasmine.getEnv().addReporter({
-        specDone: function(result) {
-            if (result.status == 'failed') {
-                browser.getCapabilities().then(function (caps) {
-                    var browserName = caps.get('browserName');
- 
-                    browser.takeScreenshot().then(function (png) {
-                        var stream = fs.createWriteStream('screenshots/' + browserName + '-' + result.fullName+ '.png');
-                        stream.write(new Buffer(png, 'base64'));
-                        stream.end();
-                    });
-                });
-            }
+      specDone: function (result) {
+        if (result.status == 'failed') {
+          browser.getCapabilities().then(function (caps) {
+            var browserName = caps.get('browserName');
+
+            browser.takeScreenshot().then(function (png) {
+              var stream = fs.createWriteStream('screenshots/' + browserName + '-' + result.fullName + '.png');
+              stream.write(new Buffer(png, 'base64'));
+              stream.end();
+            });
+          });
         }
+      }
     });
   },
 
