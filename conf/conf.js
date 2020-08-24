@@ -106,5 +106,10 @@ exports.config = {
       };
       new HTMLReport().from('jasminexmlresults.xml', testConfig);
     });
+  },
+
+  suites: {
+    calculator: '../tests/calculator.js',
+    HealthCheck: '../tests/*.js'
   }
 };
